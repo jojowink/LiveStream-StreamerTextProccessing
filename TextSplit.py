@@ -10,7 +10,7 @@ def split_document_by_timestamp(input_file):
 
     base_name = os.path.splitext(os.path.basename(input_file))[0]
 
-    output_dir = os.path.join('./files/out', base_name)
+    output_dir = os.path.join('./files/out/Text', base_name)
     os.makedirs(output_dir, exist_ok=True)
 
     segments = []
