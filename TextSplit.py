@@ -20,7 +20,6 @@ def split_document_by_timestamp(input_file):
         text = para.text.strip()
         if not text:
             continue
-        # 匹配非数字开头加时间戳
         if re.match(r'^\D+\d{2}:\d{2}:\d{2}', text):
             if current_segment:
                 segments.append(current_segment)
@@ -54,7 +53,6 @@ def save_document(text, output_file):
     for line in text.split("\n"):
         paragraph = doc.add_paragraph(line)
 
-        # 设置字体为等线
         for run in paragraph.runs:
             run.font.name = "Microsoft YaHei"
             run._element.rPr.rFonts.set(qn("w:eastAsia"), "Microsoft YaHei")
@@ -65,7 +63,6 @@ def save_document(text, output_file):
 def process_files():
     input_dir = './files/LiveStreamerText'
 
-    # Process each .docx file in the input directory
     for filename in os.listdir(input_dir):
         if filename.endswith('.docx'):
             input_file = os.path.join(input_dir, filename)
