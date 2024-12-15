@@ -23,7 +23,7 @@ def extract_error_types_and_counts(doc_text):
 
 
 def update_summary(doc_path, out_path):
-    os.makedirs('./files/out/Report', exist_ok=True)
+    os.makedirs('../files/out/Report', exist_ok=True)
 
     doc = docx.Document(doc_path)
 
@@ -54,12 +54,40 @@ def update_summary(doc_path, out_path):
             run._element.rPr.rFonts.set(qn('w:eastAsia'), '等线')
             run.font.size = Pt(11)
 
-    doc.save(os.path.join('./files/out/Report', os.path.basename(doc_path)))
+    doc.save(os.path.join('../files/out/Report', os.path.basename(doc_path)))
 
 
 if __name__ == '__main__':
 
-    for filename in os.listdir('./files/LiveStreamerReport'):
-        if filename.endswith('.docx'):
-            file_path = os.path.join('./files/LiveStreamerReport', filename)
-            update_summary(file_path, './files/out/Report')
+    # 固定目录
+    input_dir = "../files/LiveStreamerReport"
+    output_dir = "../files/out/Report"
+
+    print("请确认：需要处理的文件是否已放置到 '../files/LiveStreamerReport' 目录中？")
+    user_input = input("输入 'y' 确认，或其他键退出程序: ").strip().lower()
+
+    if user_input != 'y':
+        print("操作已取消，请将文件放置到指定目录后再运行程序。")
+        exit()
+
+    # 检查输入目录是否存在
+    if not os.path.exists(input_dir):
+        print(f"输入目录不存在: {input_dir}")
+        os.makedirs(input_dir)
+        print("已自动创建输入目录，请将文件放置到该目录后重新运行程序。")
+        exit()
+
+    # 确保输出目录存在
+    os.makedirs(output_dir, exist_ok=True)
+
+    try:
+        print("开始处理文档...")
+        for filename in os.listdir(input_dir):
+            if filename.endswith('.docx'):
+                file_path = os.path.join(input_dir, filename)
+                update_summary(file_path, output_dir)
+        print(f"所有文件已处理完成！结果保存在目录: {output_dir}")
+    except Exception as e:
+        print(f"处理文档时发生错误: {e}")
+    finally:
+        input("按任意键退出程序...")

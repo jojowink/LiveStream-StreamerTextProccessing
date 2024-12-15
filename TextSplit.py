@@ -10,7 +10,7 @@ def split_document_by_timestamp(input_file):
 
     base_name = os.path.splitext(os.path.basename(input_file))[0]
 
-    output_dir = os.path.join('./files/out/Text', base_name)
+    output_dir = os.path.join('../files/out/Text', base_name)
     os.makedirs(output_dir, exist_ok=True)
 
     segments = []
@@ -61,7 +61,7 @@ def save_document(text, output_file):
 
 
 def process_files():
-    input_dir = './files/LiveStreamerText'
+    input_dir = '../files/LiveStreamerText'
 
     for filename in os.listdir(input_dir):
         if filename.endswith('.docx'):
@@ -70,4 +70,18 @@ def process_files():
 
 
 if __name__ == "__main__":
-    process_files()
+    try:
+        # 提示用户确认文件是否已放置到指定目录
+        print("请确认：需要处理的文件是否已放置到 '../files/LiveStreamerText' 目录中？")
+        user_input = input("输入 'y' 确认，或其他键退出程序: ").strip().lower()
+
+        if user_input == 'y':
+            print("开始处理文件...")
+            process_files()
+            print("所有文件处理完成！输出结果已保存到 '../files/out/Text' 目录中。")
+        else:
+            print("操作已取消，请将文件放置到指定目录后再运行程序。")
+    except Exception as e:
+        print(f"程序运行出错: {e}")
+    finally:
+        input("按任意键退出程序...")
