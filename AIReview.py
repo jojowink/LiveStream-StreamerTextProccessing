@@ -1,4 +1,6 @@
 import os
+import re
+
 from docx import Document
 from docx.shared import Pt
 from docx.oxml.ns import qn
@@ -61,11 +63,13 @@ def process_doc_file(file_path, output_path, prompt):
 
     # 保存结果
     new_doc.save(output_path)
-
+def natural_sort_key(s):
+    return [int(text) if text.isdigit() else text for text in re.split(r'(\d+)', s)]
 
 def process_folder(input_folder, output_folder, prompt):
     """处理文件夹中的所有 DOC 文件"""
     for root, _, files in os.walk(input_folder):
+        files = sorted(files, key=natural_sort_key)
         for file in files:
             if file.endswith(".doc") or file.endswith(".docx"):
                 input_path = os.path.join(root, file)
