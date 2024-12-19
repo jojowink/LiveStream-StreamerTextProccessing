@@ -8,8 +8,8 @@ from openai import OpenAI
 
 api_key = os.getenv("API_KEY")
 
-input_folder = "../files/out"
-output_folder = "../files/out/AI"
+input_folder = "./files/out"
+output_folder = "./files/out/AI"
 
 os.makedirs(output_folder, exist_ok=True)
 
@@ -82,12 +82,12 @@ def get_max_processed_number(output_folder):
     return max_number
 
 
-def log_failed_file(failed_file_path, failed_log_file="../files/log/failed_files.txt"):
+def log_failed_file(failed_file_path, failed_log_file="./files/log/failed_files.txt"):
     with open(failed_log_file, "a", encoding="utf-8") as log_file:
         log_file.write(f"{failed_file_path}\n")
 
 
-def process_folder(input_folder, output_folder, prompt, failed_log_file="../files/log/failed_files.txt"):
+def process_folder(input_folder, output_folder, prompt, failed_log_file="./files/log/failed_files.txt"):
     """处理文件夹中的所有 DOC 文件"""
     failed_files = []
     if os.path.exists(failed_log_file):
@@ -140,9 +140,9 @@ def process_folder(input_folder, output_folder, prompt, failed_log_file="../file
 
 def main():
     input_folder_name = input("请输入需要处理的文件夹名称：")
-    input_folder = os.path.join("../files/out/Text/", input_folder_name)
-    output_folder = os.path.join("../files/out/AI/", input_folder_name)
-    prompt_path = "../files/prompt/prompt.txt"
+    input_folder = os.path.join("./files/out/Text/", input_folder_name)
+    output_folder = os.path.join("./files/out/AI/", input_folder_name)
+    prompt_path = "./files/prompt/prompt.txt"
 
     if not os.path.exists(input_folder):
         print(f"错误：文件夹 {input_folder} 不存在！")
