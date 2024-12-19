@@ -172,3 +172,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    input("程序运行完成，按任意键退出程序...")
